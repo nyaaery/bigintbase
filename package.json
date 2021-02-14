@@ -1,6 +1,6 @@
 {
   "name": "bigintbase",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "",
   "main": "compiled/index.js",
   "author": "Aery",
@@ -11,5 +11,8 @@
     "@babel/preset-typescript": "^7.12.7",
     "@types/jest": "^26.0.19",
     "babel-jest": "^26.6.3"
+  },
+  "dependencies": {
+    "lib": "git+https://github.com/nyaaery/lib.git"
   }
 }

@@ -1,7 +1,7 @@
 import {
     bigint_to_base,
     base_to_bigint
-} from "../src/convert";
+} from "../src/index";
 
 const nums = [
     10n,
@@ -95,11 +95,15 @@ describe("bigint_to_base", () => {
 });
 
 describe("base_to_bigint", () => {
+    test("Returns error when attempting to convert number containing an invalid character", () => {
+        expect(base_to_bigint("2", "01").is_err()).toBe(true);
+    });
+
     bases.forEach(base => {
         describe(base.name, () => {
             combine(base.nums, nums).forEach(([ base_n, n ]) => {
                 test(`f(\"${base_n}\") = ${n}n`, () => {
-                    expect(base_to_bigint(base_n, base.base)).toBe(n);
+                    expect(base_to_bigint(base_n, base.base).$).toBe(n);
                 });
             });
         });

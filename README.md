@@ -16,7 +16,10 @@ bigint_to_base(144n, base12);
 ```ts
 const base12 = "0123456789AB";
 
-base_to_bigint("100", base12);
+const result: Result<bigint, string> = base_to_bigint("100", base12);
+
+result.$; // Same as result.unwrap()
 /*
     144n
 */
+```
