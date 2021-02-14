@@ -13,8 +13,8 @@ export const base_to_bigint = (base_n: string, base: string): bigint => {
     return base_n
         .split('')
         .reduce((acc, cur, i) => {
-            const i2 = BigInt(base_n.length - (i + 1));
+            const exp = BigInt(base_n.length - (i + 1));
             const digit = BigInt(base.indexOf(cur));
-            return acc + digit * BigInt(base.length) ** i2;
+            return acc + digit * BigInt(base.length) ** exp;
         }, 0n);
 }
