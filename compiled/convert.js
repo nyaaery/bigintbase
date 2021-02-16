@@ -1,32 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.base_to_bigint = exports.bigint_to_base = void 0;
-const lib_1 = require("lib");
-const bigint_to_base = (n, base) => {
-    const i = Number(n % BigInt(base.length));
-    const n2 = n / BigInt(base.length);
-    switch (n2) {
-        case 0n:
-            return base[i];
-        default:
-            return exports.bigint_to_base(n2, base) + base[i];
-    }
-};
+function bigint_to_base(n, base) {
+    let base_n = "";
+    do {
+        const i = Number(n % BigInt(base.length));
+        n /= BigInt(base.length);
+        base_n = base[i] + base_n;
+    } while (n != 0n);
+    return base_n;
+}
 exports.bigint_to_base = bigint_to_base;
-const reducer = (base_n, base) => (acc, cur, i) => acc.match({
-    Ok(n) {
+function base_to_bigint(base_n, base) {
+    let n = 0n;
+    for (let i = 0; i < base_n.length; i++) {
+        const char = base_n[i];
         const exp = BigInt(base_n.length - (i + 1));
-        const digit = BigInt(base.indexOf(cur));
+        const digit = BigInt(base.indexOf(char));
         if (digit == -1n) {
-            return lib_1.Err("Invalid character");
+            throw new Error("Invalid character");
         }
-        return lib_1.Ok(n + digit * BigInt(base.length) ** exp);
-    },
-    Err: _ => acc
-});
-const base_to_bigint = (base_n, base) => {
-    return base_n
-        .split('')
-        .reduce(reducer(base_n, base), lib_1.Ok(0n));
-};
+        n += digit * BigInt(base.length) ** exp;
+    }
+    return n;
+}
 exports.base_to_bigint = base_to_bigint;
